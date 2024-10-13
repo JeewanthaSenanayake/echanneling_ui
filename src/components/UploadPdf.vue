@@ -3,23 +3,25 @@
         <v-file-input counter show-size truncate-length="15" accept=".pdf" label="Upload PDF"
             @change="handleFileUpload">
         </v-file-input>
-        <v-btn @click="upload">Upload</v-btn>
-        {{ selectedFile }}
-<DisplayPdf/>
+        <center> <v-btn color="primary" @click="upload">Upload</v-btn> </center>
+        <!-- {{ selectedFile }} -->
+<!-- <DisplayPdf/> -->
     </div>
 </template>
 <script>
-import axios from '@/service/axiosConfig';
-import DisplayPdf from './DisplayPdf.vue';
+import axios from 'axios';
+// import DisplayPdf from './DisplayPdf.vue';
 export default {
     name: 'UploadPdf',
+    props:{
+        reportId:Number,
+    },
     components: {
-        DisplayPdf,
+        // DisplayPdf,
     },
     data: () => ({
         //
         selectedFile: null,
-        reportId: 1,
     }),
     methods: {
         handleFileUpload(file) {
@@ -32,7 +34,7 @@ export default {
             formData.append('file', this.selectedFile);
             formData.append('reportId', this.reportId);
             try {
-                const response = await axios.post('/lab_reports/pdf/uploadPdf', formData, {
+                const response = await axios.post('http://localhost:8020/lab_reports/pdf/uploadPdf', formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data',
                     },
